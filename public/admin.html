@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - AromaMuse</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
+            <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Панель управления AromaMuse</h1>
+            
+            <div class="border-t pt-6">
+                <h2 class="text-lg font-semibold text-gray-700 mb-4">Обновление каталога из CSV</h2>
+                <form id="upload-form">
+                    <div>
+                        <label for="pricelist-file" class="block text-sm font-medium text-gray-600 mb-2">Выберите CSV файл прайс-листа:</label>
+                        <input type="file" id="pricelist-file" name="pricelist" accept=".csv" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required>
+                    </div>
+                    <button type="submit" class="mt-6 w-full bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors font-semibold">Загрузить и обработать</button>
+                </form>
+                
+                <div id="result-message" class="mt-6 p-4 rounded-lg text-sm hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const uploadForm = document.getElementById('upload-form');
+            const fileInput = document.getElementById('pricelist-file');
+            const resultMessage = document.getElementById('result-message');
+
+            uploadForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                if (!fileInput.files.length) {
+                    alert('Пожалуйста, выберите файл.');
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('pricelist', fileInput.files[0]);
+
+                resultMessage.classList.add('hidden');
+                resultMessage.classList.remove('bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                resultMessage.textContent = 'Загрузка и обработка...';
+                resultMessage.classList.add('bg-blue-100', 'text-blue-800');
+                resultMessage.classList.remove('hidden');
+
+                try {
+                    // В реальном приложении здесь будет fetch к вашему API
+                    // const response = await fetch('/api/admin/upload-pricelist', {
+                    //     method: 'POST',
+                    //     body: formData
+                    // });
+                    // if (!response.ok) throw new Error(`Ошибка сервера: ${response.statusText}`);
+                    // const result = await response.json();
+                    
+                    // --- СИМУЛЯЦИЯ ОТВЕТА API ---
+                    await new Promise(resolve => setTimeout(resolve, 1500)); // Имитация задержки
+                    const result = { created: 15, updated: 128, errors: 0 };
+                    // --- КОНЕЦ СИМУЛЯЦИИ ---
+
+                    resultMessage.textContent = `Обработка завершена. Создано: ${result.created}, Обновлено: ${result.updated}, Ошибок: ${result.errors}.`;
+                    resultMessage.classList.remove('bg-blue-100', 'text-blue-800');
+                    resultMessage.classList.add('bg-green-100', 'text-green-800');
+
+                } catch (error) {
+                    console.error('Ошибка при загрузке файла:', error);
+                    resultMessage.textContent = `Ошибка: ${error.message}`;
+                    resultMessage.classList.remove('bg-blue-100', 'text-blue-800');
+                    resultMessage.classList.add('bg-red-100', 'text-red-800');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оформление заказа - AromaMuse</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; color: #1f1a17; }
+        .font-serif { font-family: 'Cormorant Garamond', serif; }
+        .brand-brown { background-color: #4d3a30; }
+        .brand-beige { background-color: #f5f1e9; }
+        .brand-dark-text { color: #4d3a30; }
+        .radio-label input:checked + div { border-color: #4d3a30; background-color: #f5f1e9; }
+        .form-input { @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-brand-brown; }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Simplified Header -->
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+        <div class="container mx-auto px-4"><div class="flex items-center justify-center h-24"><a href="./index.html" class="h-20"><img src="http://googleusercontent.com/file_content/1" alt="Логотип AromaMuse" class="h-full w-auto"></a></div></div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 md:py-16">
+        <h1 class="font-serif text-4xl md:text-5xl brand-dark-text text-center mb-8 md:mb-12">Оформление заказа</h1>
+        <form id="checkout-form" class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+            
+            <!-- Left Side: Forms -->
+            <div class="space-y-8">
+                <section>
+                    <h2 class="font-serif text-2xl brand-dark-text mb-4">1. Контактная информация</h2>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200/80 space-y-4">
+                        <div><label for="email" class="block text-sm font-medium text-gray-700">Email</label><input type="email" id="email" class="form-input mt-1" required></div>
+                        <div><label for="phone" class="block text-sm font-medium text-gray-700">Телефон</label><input type="tel" id="phone" class="form-input mt-1" required></div>
+                    </div>
+                </section>
+                <section>
+                    <h2 class="font-serif text-2xl brand-dark-text mb-4">2. Адрес доставки</h2>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200/80 space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div><label for="first-name" class="block text-sm font-medium text-gray-700">Имя</label><input type="text" id="first-name" class="form-input mt-1" required></div>
+                            <div><label for="last-name" class="block text-sm font-medium text-gray-700">Фамилия</label><input type="text" id="last-name" class="form-input mt-1" required></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Side: Order Summary -->
+            <div class="lg:sticky lg:top-32 lg:h-fit">
+                <h2 class="font-serif text-2xl brand-dark-text mb-4">Ваш заказ</h2>
+                <div id="order-summary" class="bg-white p-6 rounded-lg shadow-sm border border-gray-200/80">
+                    <!-- Содержимое будет загружено сюда -->
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const orderSummaryContainer = document.getElementById('order-summary');
+            const checkoutForm = document.getElementById('checkout-form');
+
+            const renderOrderSummary = (cart) => {
+                if (!cart || cart.items.length === 0) {
+                    orderSummaryContainer.innerHTML = '<p>Ваша корзина пуста.</p>';
+                    return;
+                }
+
+                const itemsHTML = cart.items.map(item => `
+                    <li class="flex py-4">
+                        <img src="https://placehold.co/100x100/f5f1e9/4d3a30?text=${item.name.charAt(0)}" alt="[Изображение] ${item.name}" class="h-16 w-16 rounded-md">
+                        <div class="ml-4 flex-1 flex justify-between items-start">
+                            <div>
+                                <h3 class="text-sm font-medium brand-dark-text">${item.name}</h3>
+                                <p class="text-sm text-gray-500">${item.volume}</p>
+                            </div>
+                            <p class="text-sm font-medium brand-dark-text">${(item.price * item.quantity).toLocaleString('ru-RU')} ₽</p>
+                        </div>
+                    </li>
+                `).join('');
+                
+                const deliveryCost = 350; // Предположим фиксированную доставку для примера
+                const totalAmount = cart.total + deliveryCost;
+
+                orderSummaryContainer.innerHTML = `
+                    <ul role="list" class="divide-y divide-gray-200">
+                        ${itemsHTML}
+                    </ul>
+                    <div class="border-t border-gray-200 mt-6 pt-6 space-y-2">
+                        <div class="flex justify-between text-sm text-gray-600"><p>Товары</p><p>${cart.total.toLocaleString('ru-RU')} ₽</p></div>
+                        <div class="flex justify-between text-sm text-gray-600"><p>Доставка</p><p>${deliveryCost.toLocaleString('ru-RU')} ₽</p></div>
+                        <div class="flex justify-between text-lg font-semibold brand-dark-text pt-2"><p>Итого к оплате</p><p>${totalAmount.toLocaleString('ru-RU')} ₽</p></div>
+                    </div>
+                    <div class="mt-6">
+                        <button type="submit" form="checkout-form" class="w-full flex items-center justify-center rounded-md border border-transparent brand-brown px-6 py-3 text-base font-semibold tracking-wide text-white shadow-sm hover:bg-gray-700 transition-colors">
+                            Перейти к оплате
+                        </button>
+                    </div>
+                `;
+            };
+
+            const fetchCart = async () => {
+                // В реальном приложении: const response = await fetch('/api/cart'); const cart = await response.json();
+                const mockCart = {
+                    items: [
+                        { variantId: 102, name: 'Gypsy Water', volume: '10 мл', price: 2800, quantity: 1 },
+                        { variantId: 201, name: 'Tobacco Vanille', volume: '50 мл', price: 24500, quantity: 1 }
+                    ],
+                    total: 27300
+                };
+                renderOrderSummary(mockCart);
+            };
+
+            checkoutForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const submitButton = checkoutForm.querySelector('button[type="submit"]');
+                submitButton.textContent = 'Создаем платеж...';
+                submitButton.disabled = true;
+
+                try {
+                    // В реальном приложении: const response = await fetch('/api/checkout/create-payment', { method: 'POST' });
+                    // const data = await response.json();
+                    
+                    const mockResponse = {
+                        confirmationUrl: "https://yookassa.ru/checkout/payments/v2/..." // Пример ссылки
+                    };
+                    const confirmationUrl = mockResponse.confirmationUrl;
+
+                    alert(`Сейчас вы будете перенаправлены на страницу оплаты. URL: ${confirmationUrl}`);
+                    // window.location.href = confirmationUrl;
+
+                } catch (error) {
+                    alert('Произошла ошибка при создании платежа. Пожалуйста, попробуйте снова.');
+                    submitButton.textContent = 'Перейти к оплате';
+                    submitButton.disabled = false;
+                }
+            });
+
+            fetchCart();
+        });
+    </script>
+</body>
+</html>

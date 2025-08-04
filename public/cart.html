@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина - AromaMuse</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; color: #1f1a17; }
+        .font-serif { font-family: 'Cormorant Garamond', serif; }
+        .brand-brown { background-color: #4d3a30; }
+        .brand-beige { background-color: #f5f1e9; }
+        .brand-dark-text { color: #4d3a30; }
+    </style>
+</head>
+<body class="brand-beige">
+
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+        <div class="container mx-auto px-4"><div class="flex items-center justify-between h-24"><a href="./index.html" class="h-20"><img src="http://googleusercontent.com/file_content/1" alt="Логотип AromaMuse" class="h-full w-auto"></a><nav class="hidden md:flex items-center space-x-8 font-serif text-xl brand-dark-text"><a href="./catalog.html" class="hover:text-gray-900">Каталог</a><a href="#" class="hover:text-gray-900">Бренды</a><a href="#" class="hover:text-gray-900">О нас</a></nav><div class="flex items-center space-x-5 brand-dark-text"><a href="./account.html" class="hover:text-gray-900"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg></a><a href="./cart.html" class="hover:text-gray-900 relative"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg><span id="cart-count" class="absolute -top-2 -right-2 brand-brown text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">?</span></a></div></div></div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 md:py-16">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="font-serif text-4xl md:text-5xl brand-dark-text text-center mb-8 md:mb-12">Ваша корзина</h1>
+            
+            <div id="cart-container" class="bg-white rounded-lg shadow-sm p-6 md:p-8">
+                <!-- Содержимое корзины будет загружено сюда -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartContainer = document.getElementById('cart-container');
+            const cartCountElement = document.getElementById('cart-count');
+
+            const renderCart = (cart) => {
+                const totalItems = cart.items.reduce((sum, item) => sum + item.quantity, 0);
+                cartCountElement.textContent = totalItems;
+
+                if (cart.items.length === 0) {
+                    cartContainer.innerHTML = `
+                        <div class="text-center py-12">
+                            <h2 class="font-serif text-3xl brand-dark-text">Ваша корзина пуста</h2>
+                            <p class="mt-2 text-gray-600">Самое время добавить что-нибудь.</p>
+                            <a href="./catalog.html" class="mt-6 inline-block brand-brown text-white py-3 px-8 rounded-lg hover:bg-gray-700 transition-all duration-300 font-semibold tracking-wide">Перейти в каталог</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const itemsHTML = cart.items.map(item => `
+                    <li class="flex py-6">
+                        <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                            <img src="https://placehold.co/200x200/f5f1e9/4d3a30?text=${item.name.charAt(0)}" alt="[Изображение] ${item.name}" class="h-full w-full object-cover object-center">
+                        </div>
+                        <div class="ml-4 flex flex-1 flex-col">
+                            <div>
+                                <div class="flex justify-between text-base font-medium brand-dark-text">
+                                    <h3 class="font-serif text-xl"><a href="#">${item.name}</a></h3>
+                                    <p class="ml-4 font-semibold">${(item.price * item.quantity).toLocaleString('ru-RU')} ₽</p>
+                                </div>
+                                <p class="mt-1 text-sm text-gray-500">${item.brand}, ${item.volume}</p>
+                            </div>
+                            <div class="flex flex-1 items-end justify-between text-sm">
+                                <div class="flex items-center border border-gray-300 rounded-md">
+                                    <button class="px-2 py-1 text-gray-600 hover:bg-gray-100 rounded-l-md">-</button>
+                                    <input type="text" value="${item.quantity}" class="w-10 text-center border-none focus:ring-0">
+                                    <button class="px-2 py-1 text-gray-600 hover:bg-gray-100 rounded-r-md">+</button>
+                                </div>
+                                <div class="flex">
+                                    <button type="button" class="font-medium text-gray-600 hover:brand-dark-text">Удалить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                `).join('');
+
+                cartContainer.innerHTML = `
+                    <div class="flow-root">
+                        <ul role="list" class="-my-6 divide-y divide-gray-200">
+                            ${itemsHTML}
+                        </ul>
+                    </div>
+                    <div class="border-t border-gray-200 px-4 py-6 sm:px-6 mt-8">
+                        <div class="flex justify-between text-lg font-medium brand-dark-text">
+                            <p>Итого</p>
+                            <p>${cart.total.toLocaleString('ru-RU')} ₽</p>
+                        </div>
+                        <p class="mt-1 text-sm text-gray-500">Стоимость доставки будет рассчитана на следующем шаге.</p>
+                        <div class="mt-6">
+                            <a href="./checkout.html" class="flex items-center justify-center rounded-md border border-transparent brand-brown px-6 py-3 text-base font-semibold tracking-wide text-white shadow-sm hover:bg-gray-700 transition-colors">
+                                Оформить заказ
+                            </a>
+                        </div>
+                        <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
+                            <p>или <a href="./catalog.html" class="font-medium brand-dark-text hover:text-gray-600">Продолжить покупки<span aria-hidden="true"> &rarr;</span></a></p>
+                        </div>
+                    </div>
+                `;
+            };
+
+            const fetchCart = async () => {
+                cartContainer.innerHTML = '<p class="text-center">Загрузка корзины...</p>';
+                try {
+                    // const response = await fetch('/api/cart');
+                    // const cart = await response.json();
+                    const mockCart = {
+                        items: [
+                            { variantId: 102, name: 'Gypsy Water', brand: 'Byredo', volume: '10 мл', price: 2800, quantity: 1 },
+                            { variantId: 201, name: 'Tobacco Vanille', brand: 'Tom Ford', volume: '50 мл', price: 24500, quantity: 1 }
+                        ],
+                        total: 27300
+                    };
+                    
+                    renderCart(mockCart);
+
+                } catch (error) {
+                    console.error("Не удалось загрузить корзину:", error);
+                    cartContainer.innerHTML = '<p class="text-center text-red-600">Ошибка при загрузке корзины.</p>';
+                }
+            };
+
+            fetchCart();
+        });
+    </script>
+</body>
+</html>

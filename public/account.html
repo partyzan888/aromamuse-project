@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет - AromaMuse</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; color: #1f1a17; }
+        .font-serif { font-family: 'Cormorant Garamond', serif; }
+        .brand-brown { background-color: #4d3a30; }
+        .brand-beige { background-color: #f5f1e9; }
+        .brand-dark-text { color: #4d3a30; }
+        .tab-active { border-color: #4d3a30; color: #4d3a30; font-weight: 600; }
+        .tab-inactive { border-color: transparent; color: #6b7280; }
+    </style>
+</head>
+<body class="brand-beige">
+
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+        <div class="container mx-auto px-4"><div class="flex items-center justify-between h-24"><a href="./index.html" class="h-20"><img src="http://googleusercontent.com/file_content/1" alt="Логотип AromaMuse" class="h-full w-auto"></a><nav class="hidden md:flex items-center space-x-8 font-serif text-xl brand-dark-text"><a href="./catalog.html" class="hover:text-gray-900">Каталог</a><a href="#" class="hover:text-gray-900">Бренды</a><a href="#" class="hover:text-gray-900">О нас</a></nav><div class="flex items-center space-x-5 brand-dark-text"><a href="./account.html" class="hover:text-gray-900"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg></a><a href="./cart.html" class="hover:text-gray-900 relative"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg><span id="cart-count" class="absolute -top-2 -right-2 brand-brown text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span></a></div></div></div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 md:py-16">
+        <div id="account-wrapper" class="max-w-5xl mx-auto">
+            <!-- Содержимое будет загружено сюда -->
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const accountWrapper = document.getElementById('account-wrapper');
+
+            const renderAccountPage = (user, orders) => {
+                const ordersHTML = orders.map(order => {
+                    const statusClass = order.status === 'Доставлен' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800';
+                    return `
+                    <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200/80">
+                        <div class="flex flex-wrap justify-between items-center mb-4 gap-2">
+                            <div>
+                                <p class="font-semibold text-lg brand-dark-text">Заказ № ${order.id}</p>
+                                <p class="text-sm text-gray-500">от ${new Date(order.date).toLocaleDateString('ru-RU')}</p>
+                            </div>
+                            <div>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${statusClass}">${order.status}</span>
+                            </div>
+                        </div>
+                        <div class="border-t border-gray-200 pt-4">
+                            <p class="font-semibold brand-dark-text">Сумма: ${order.totalAmount.toLocaleString('ru-RU')} ₽</p>
+                        </div>
+                    </div>
+                `}).join('');
+
+                accountWrapper.innerHTML = `
+                    <h1 class="font-serif text-4xl md:text-5xl brand-dark-text mb-8">Личный кабинет</h1>
+                    <div class="flex flex-col md:flex-row gap-8 lg:gap-12">
+                        <aside class="w-full md:w-1/4">
+                            <nav class="flex flex-row md:flex-col border-b md:border-b-0 md:border-r border-gray-300/70">
+                                <button data-target="orders" class="tab-button text-left py-3 px-4 border-b-2 font-serif text-xl tab-active">Мои заказы</button>
+                                <button data-target="profile" class="tab-button text-left py-3 px-4 border-b-2 font-serif text-xl tab-inactive">Личные данные</button>
+                                <a href="#" id="logout-btn" class="text-left py-3 px-4 text-gray-500 hover:brand-dark-text font-serif text-xl">Выйти</a>
+                            </nav>
+                        </aside>
+                        <div class="w-full md:w-3/4">
+                            <div id="orders" class="tab-content space-y-6">${ordersHTML}</div>
+                            <div id="profile" class="tab-content hidden">
+                                <h2 class="font-serif text-3xl brand-dark-text mb-6">Личные данные</h2>
+                                <form id="profile-form" class="bg-white rounded-lg shadow-sm p-6 border border-gray-200/80 space-y-4">
+                                    <div>
+                                        <label for="profile-name" class="block text-sm font-medium text-gray-700">Имя</label>
+                                        <input type="text" id="profile-name" value="${user.firstName}" class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-brand-brown">
+                                    </div>
+                                    <div>
+                                        <label for="profile-email" class="block text-sm font-medium text-gray-700">Email</label>
+                                        <input type="email" id="profile-email" value="${user.email}" class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-brand-brown">
+                                    </div>
+                                    <button type="submit" class="brand-brown text-white py-2 px-6 rounded-lg hover:bg-gray-700 transition-all duration-300 font-semibold tracking-wide">Сохранить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                attachTabListeners();
+            };
+            
+            const renderLoginPrompt = () => {
+                 accountWrapper.innerHTML = `
+                    <div class="text-center py-16">
+                        <h1 class="font-serif text-4xl brand-dark-text">Пожалуйста, войдите</h1>
+                        <p class="mt-4 text-gray-600">Чтобы просматривать историю заказов и управлять личными данными, вам необходимо войти в свой аккаунт.</p>
+                        <a href="#" class="mt-8 inline-block brand-brown text-white py-3 px-8 rounded-lg hover:bg-gray-700 transition-all duration-300 font-semibold tracking-wide">Войти или зарегистрироваться</a>
+                    </div>
+                 `;
+            };
+
+            const attachTabListeners = () => {
+                const tabButtons = document.querySelectorAll('.tab-button');
+                const tabContents = document.querySelectorAll('.tab-content');
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const targetId = button.dataset.target;
+                        tabButtons.forEach(btn => btn.classList.replace('tab-active', 'tab-inactive'));
+                        button.classList.replace('tab-inactive', 'tab-active');
+                        tabContents.forEach(content => {
+                            content.id === targetId ? content.classList.remove('hidden') : content.classList.add('hidden');
+                        });
+                    });
+                });
+            };
+
+            const init = async () => {
+                // В реальном приложении: const userResponse = await fetch('/api/auth/me');
+                const isLoggedIn = true; // Для демонстрации
+                
+                if (isLoggedIn) {
+                    const mockUser = { id: 1, firstName: 'Александра', email: 'a.ivanova@example.com' };
+                    const mockOrders = [
+                        { id: '202408-001', date: '2024-08-01', status: 'Доставлен', totalAmount: 27650 },
+                        { id: '202407-015', date: '2024-07-15', status: 'В пути', totalAmount: 950 }
+                    ];
+                    renderAccountPage(mockUser, mockOrders);
+                } else {
+                    renderLoginPrompt();
+                }
+            };
+
+            init();
+        });
+    </script>
+</body>
+</html>

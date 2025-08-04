@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AromaMuse - Магазин парфюмерии</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1f1a17; /* Darker text for better contrast on beige */
+        }
+        .font-serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .brand-brown { background-color: #4d3a30; }
+        .brand-gold { background-color: #e1c59a; }
+        .brand-beige { background-color: #f5f1e9; }
+        .brand-dark-text { color: #4d3a30; }
+        .brand-brown-text { color: #4d3a30; }
+        .hero-bg {
+            background-image: url('https://placehold.co/1920x1080/f5f1e9/4d3a30?text=AromaMuse');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-24">
+                <a href="./index.html" class="h-20">
+                    <img src="http://googleusercontent.com/file_content/1" alt="Логотип AromaMuse" class="h-full w-auto">
+                </a>
+                <nav class="hidden md:flex items-center space-x-8 font-serif text-xl brand-dark-text">
+                    <a href="./catalog.html" class="hover:text-gray-900 transition-colors">Каталог</a>
+                    <a href="#" class="hover:text-gray-900 transition-colors">Бренды</a>
+                    <a href="#" class="hover:text-gray-900 transition-colors">О нас</a>
+                </nav>
+                <div class="flex items-center space-x-5 brand-dark-text">
+                    <a href="./account.html" class="hover:text-gray-900"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg></a>
+                    <a href="./cart.html" class="hover:text-gray-900 relative"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg><span class="absolute -top-2 -right-2 brand-brown text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-bg h-[60vh] md:h-[80vh] flex items-center justify-center text-center">
+            <div class="bg-white/80 backdrop-blur-sm p-8 md:p-16 rounded-lg shadow-lg">
+                <h1 class="font-serif text-4xl md:text-6xl brand-dark-text mb-4">Искусство вашего аромата</h1>
+                <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">Откройте для себя мир нишевой парфюмерии. Найдите свой уникальный шлейф с AromaMuse.</p>
+                <a href="./catalog.html" class="brand-brown text-white py-3 px-10 rounded-lg hover:bg-gray-700 transition-all duration-300 text-lg font-semibold tracking-wide">Перейти в каталог</a>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-16 sm:py-24 brand-beige">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+                    <div class="flex flex-col items-center">
+                        <div class="mb-4 brand-brown-text">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 6 6 6 6 0 0 0-6 6 6 6 0 0 0-6-6 6 6 0 0 0 6-6Z"/><path d="M12 15a6 6 0 0 0 6 6 6 6 0 0 0-6 6 6 6 0 0 0-6-6 6 6 0 0 0 6-6Z"/></svg>
+                        </div>
+                        <h3 class="font-serif text-2xl brand-dark-text mb-2">Осознанный выбор</h3>
+                        <p class="text-gray-600">Уникальный фильтр по нотам поможет найти именно тот аромат, который вы ищете.</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="mb-4 brand-brown-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3.82 7.22 2.6-2.6A2.41 2.41 0 0 1 8 4h8a2.41 2.41 0 0 1 1.58.62l2.6 2.6A2.41 2.41 0 0 1 21 8.8V16a2.41 2.41 0 0 1-.62 1.58l-2.6 2.6A2.41 2.41 0 0 1 16 21H8a2.41 2.41 0 0 1-1.58-.62l-2.6-2.6A2.41 2.41 0 0 1 3 16.2V8.8c0-.53.21-1.04.62-1.58Z"/><path d="M12 12h.01"/></svg>
+                        </div>
+                        <h3 class="font-serif text-2xl brand-dark-text mb-2">Пробники и отливанты</h3>
+                        <p class="text-gray-600">Познакомьтесь с ароматом перед покупкой полноразмерного флакона.</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="mb-4 brand-brown-text">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v2"/><path d="m7 19 5-3 5 3"/><path d="M21 17v.01"/><path d="M3.98 16.5 3 21l8-4.5"/><path d="m15.5 13.5-2-3-2 3"/><path d="M20.02 16.5 21 21l-8-4.5"/></svg>
+                        </div>
+                        <h3 class="font-serif text-2xl brand-dark-text mb-2">Премиальный опыт</h3>
+                        <p class="text-gray-600">Фирменная упаковка, создающая "вау-эффект" при каждой распаковке.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Arrivals Section -->
+        <section class="py-16 sm:py-24 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="font-serif text-4xl text-center brand-dark-text mb-12">Новые поступления</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Product Card -->
+                    <div class="group">
+                        <a href="./product-page.html?id=1" class="block">
+                            <div class="w-full overflow-hidden rounded-lg bg-gray-100 mb-4 border border-gray-200/80">
+                                <img src="https://placehold.co/400x400/f5f1e9/4d3a30?text=Parfum" alt="[Изображение парфюма]" class="w-full h-full object-cover object-center group-hover:opacity-75 transition-opacity">
+                            </div>
+                            <h3 class="font-serif text-xl brand-dark-text">Название аромата 1</h3>
+                            <p class="text-sm text-gray-500 mb-2">Brand Name</p>
+                            <p class="text-lg font-semibold brand-dark-text">от 2500 ₽</p>
+                        </a>
+                    </div>
+                    <!-- Repeat similar cards... -->
+                     <div class="group">
+                        <a href="./product-page.html?id=2" class="block">
+                            <div class="w-full overflow-hidden rounded-lg bg-gray-100 mb-4 border border-gray-200/80">
+                                <img src="https://placehold.co/400x400/f5f1e9/4d3a30?text=Parfum" alt="[Изображение парфюма]" class="w-full h-full object-cover object-center group-hover:opacity-75 transition-opacity">
+                            </div>
+                            <h3 class="font-serif text-xl brand-dark-text">Название аромата 2</h3>
+                            <p class="text-sm text-gray-500 mb-2">Brand Name</p>
+                            <p class="text-lg font-semibold brand-dark-text">от 3200 ₽</p>
+                        </a>
+                    </div>
+                     <div class="group">
+                        <a href="./product-page.html?id=3" class="block">
+                            <div class="w-full overflow-hidden rounded-lg bg-gray-100 mb-4 border border-gray-200/80">
+                                <img src="https://placehold.co/400x400/f5f1e9/4d3a30?text=Parfum" alt="[Изображение парфюма]" class="w-full h-full object-cover object-center group-hover:opacity-75 transition-opacity">
+                            </div>
+                            <h3 class="font-serif text-xl brand-dark-text">Название аромата 3</h3>
+                            <p class="text-sm text-gray-500 mb-2">Brand Name</p>
+                            <p class="text-lg font-semibold brand-dark-text">от 1900 ₽</p>
+                        </a>
+                    </div>
+                     <div class="group">
+                        <a href="./product-page.html?id=4" class="block">
+                            <div class="w-full overflow-hidden rounded-lg bg-gray-100 mb-4 border border-gray-200/80">
+                                <img src="https://placehold.co/400x400/f5f1e9/4d3a30?text=Parfum" alt="[Изображение парфюма]" class="w-full h-full object-cover object-center group-hover:opacity-75 transition-opacity">
+                            </div>
+                            <h3 class="font-serif text-xl brand-dark-text">Название аромата 4</h3>
+                            <p class="text-sm text-gray-500 mb-2">Brand Name</p>
+                            <p class="text-lg font-semibold brand-dark-text">от 4500 ₽</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="brand-beige border-t border-gray-200/50">
+        <div class="container mx-auto px-4 py-12">
+            <div class="text-center">
+                 <a href="./index.html" class="inline-block h-20 mb-4">
+                    <img src="http://googleusercontent.com/file_content/1" alt="Логотип AromaMuse" class="h-full w-auto">
+                </a>
+            </div>
+            <div class="flex justify-center items-center space-x-8 font-serif text-lg brand-dark-text mb-8">
+                <a href="./catalog.html" class="hover:text-gray-900 transition-colors">Каталог</a>
+                <a href="#" class="hover:text-gray-900 transition-colors">О нас</a>
+                <a href="#" class="hover:text-gray-900 transition-colors">Доставка</a>
+            </div>
+            <div class="text-center text-gray-500 mt-8 pt-8 border-t border-gray-300/70">
+                &copy; 2024 AromaMuse. Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
